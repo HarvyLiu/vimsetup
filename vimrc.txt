@@ -1,0 +1,53 @@
+set number
+set relativenumber
+set tabstop=4
+set shiftwidth=4
+set mouse=a
+set autoindent
+set smartindent
+syntax on
+
+
+" run :PlugInstall in Vim.
+call plug#begin('~/.vim/plugged')
+
+" This is just a theme
+Plug 'joshdick/onedark.vim'
+
+" Autocompletion engine, :CocInstall coc-rust-analyzer
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" File explorer, run :NERDTreeToggle
+Plug 'preservim/nerdtree'
+
+" Search files fast with :Files
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
+" Status line (clean info bar at bottom)
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+call plug#end()
+
+set termguicolors
+autocmd VimEnter * colorscheme onedark
+
+let g:airline_theme='onedark'
+" Use Tab for completion
+inoremap <silent><expr> <Tab> pumvisible() ? coc#_select_confirm() : "\<Tab>"
+inoremap <silent><expr> <CR> pumvisible() ? "\<C-n>" : "\<CR>"
+
+" On Vim startup, open NERDTree
+autocmd VimEnter * NERDTreeToggle
+
+" open nerdtree at startup
+autocmd BufWinEnter * if &filetype ==# 'nerdtree' |
+" Automatically close Vim if NERDTree is the last window
+autocmd bufenter * if winnr('$') == 1 && &filetype ==# 'nerdtree' |
+      \ quit |
+      \ endif
+
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
